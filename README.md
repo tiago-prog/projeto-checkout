@@ -1,4 +1,4 @@
-# 🛒 Projeto 0 - E-commerce Checkout (Teste)
+# 🛒 E-commerce Checkout (Teste)
 
 Aplicação de e-commerce simples para entender o fluxo completo de compra: from o clique do usuário até a integração com Stripe. Este é um projeto de aprendizado sobre **segurança web**, **validação no servidor** e **integração de pagamentos**.
 
@@ -34,7 +34,7 @@ projeto-checkout/
 │   ├── package.json
 │   ├── vite.config.js
 │   ├── .env.example
-│   └── .env                      # (não versionar)
+│   └── .env                      # (não versionado)
 │
 └── README.md
 ```
