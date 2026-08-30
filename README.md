@@ -23,9 +23,6 @@ Acesse: `http://localhost:5173`
 ## 📚 Documentação
 
 - [GETTING_STARTED.md](GETTING_STARTED.md) - Setup detalhado
-- [ARCHITECTURE.md](ARCHITECTURE.md) - Como funciona
-- [CONTRIBUTING.md](CONTRIBUTING.md) - Contribuir
-- [STRUCTURE.md](STRUCTURE.md) - Estrutura de pastas
 
 ## 🎯 Fluxo
 
