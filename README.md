@@ -34,7 +34,7 @@ projeto-checkout/
 │   ├── package.json
 │   ├── vite.config.js
 │   ├── .env.example
-│   └── .env                      # (não versionar)
+│   └── .env                      # (não versionado)
 │
 └── README.md
 ```
