@@ -1,29 +1,28 @@
 /**
  * HomePage
- * Página principal de checkout do produto.
+ * Página principal da loja com produtos.
  */
 
 import { useState } from "react";
-import { useProduct } from "../hooks/useProduct";
-import ProductCard from "../components/ProductCard";
+import Header from "../components/Header";
+import HeroSection from "../components/HeroSection";
+import ProductsGrid from "../components/ProductsGrid";
+import Footer from "../components/Footer";
+import { getAllProducts } from "../constants/products";
 import api from "../services/api";
 
-const PRODUCT_ID = "prod_pdf_teste";
-
 export default function HomePage() {
-  const { product, loading, error } = useProduct(PRODUCT_ID);
-  const [buying, setBuying] = useState(false);
-  const [buyError, setBuyError] = useState(null);
+  const [products] = useState(getAllProducts());
+  const [buyingId, setBuyingId] = useState(null);
+  const [error, setError] = useState(null);
 
-  async function handleBuy() {
-    if (!product) return;
-
-    setBuying(true);
-    setBuyError(null);
+  async function handleBuy(productId) {
+    setBuyingId(productId);
+    setError(null);
 
     try {
       // Cria uma sessão de checkout no Stripe
-      const data = await api.createCheckout(product.id);
+      const data = await api.createCheckout(productId);
 
       // Redireciona para o checkout do Stripe
       if (data.url) {
@@ -32,49 +31,57 @@ export default function HomePage() {
         throw new Error("URL de checkout não recebida");
       }
     } catch (err) {
-      setBuyError(err.message);
-      setBuying(false);
+      setError(err.message);
+      setBuyingId(null);
       console.error("Erro no checkout:", err);
     }
   }
 
-  if (loading) {
-    return (
-      <div style={{ textAlign: "center", padding: "2rem" }}>
-        <p style={{ color: "#666" }}>Carregando produto...</p>
-      </div>
-    );
-  }
-
-  if (error && !product) {
-    return (
-      <div style={{ textAlign: "center", padding: "2rem" }}>
-        <p style={{ color: "#c00", marginBottom: "1rem" }}>Erro: {error}</p>
-        <p style={{ color: "#666", fontSize: "0.9rem" }}>
-          Verifique se o backend está rodando em http://localhost:3001
-        </p>
-      </div>
-    );
-  }
-
   return (
-    <div style={{ width: "100%", maxWidth: 480 }}>
-      <ProductCard product={product} onBuy={handleBuy} buying={buying} />
+    <div className="app-container">
+      <Header />
 
-      {buyError && product && (
-        <div
-          style={{
-            marginTop: "1.5rem",
-            padding: "1rem",
-            background: "#fef2f2",
-            border: "1px solid #fecaca",
-            borderRadius: 8,
-            color: "#991b1b",
-          }}
-        >
-          <strong>Erro:</strong> {buyError}
+      {error && (
+        <div className="error-banner">
+          <div className="error-content">
+            <span className="error-icon">⚠️</span>
+            <p>{error}</p>
+            <button onClick={() => setError(null)} className="error-close">
+              ✕
+            </button>
+          </div>
         </div>
       )}
+
+      <HeroSection />
+      <ProductsGrid products={products} onBuy={handleBuy} buyingId={buyingId} />
+
+      <section className="features-section">
+        <div className="features-grid">
+          <div className="feature">
+            <span className="feature-icon">⚡</span>
+            <h4>Entrega Instantânea</h4>
+            <p>Acesso imediato após a compra</p>
+          </div>
+          <div className="feature">
+            <span className="feature-icon">🔒</span>
+            <h4>Seguro</h4>
+            <p>Pagamento seguro com Stripe</p>
+          </div>
+          <div className="feature">
+            <span className="feature-icon">💯</span>
+            <h4>Garantia</h4>
+            <p>Satisfação garantida ou seu dinheiro de volta</p>
+          </div>
+          <div className="feature">
+            <span className="feature-icon">🎁</span>
+            <h4>Bônus</h4>
+            <p>Acesso a conteúdo exclusivo</p>
+          </div>
+        </div>
+      </section>
+
+      <Footer />
     </div>
   );
 }
