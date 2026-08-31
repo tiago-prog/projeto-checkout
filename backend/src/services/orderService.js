@@ -47,8 +47,27 @@ function listOrders() {
   return orders;
 }
 
+/**
+ * Atualiza um pedido existente
+ * @param {string} id - ID do pedido
+ * @param {Object} updateData - Dados a atualizar
+ * @returns {Object|null} Pedido atualizado ou null se não encontrado
+ */
+function updateOrder(id, updateData) {
+  const order = orders.find((o) => o.id === id);
+  
+  if (!order) {
+    return null;
+  }
+
+  // Atualiza apenas os campos fornecidos
+  Object.assign(order, updateData);
+  return order;
+}
+
 module.exports = {
   createOrder,
   getOrderById,
   listOrders,
+  updateOrder,
 };

@@ -14,6 +14,8 @@ const stripe = require("./config/stripe");
 const productsRouter = require("./routes/products");
 const ordersRouter = require("./routes/orders");
 const checkoutRouter = require("./routes/checkout");
+const pixRouter = require("./routes/pix");
+const webhooksRouter = require("./routes/webhooks");
 
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -35,6 +37,8 @@ app.get("/api/health", (req, res) => {
 app.use("/api/products", productsRouter);
 app.use("/api/orders", ordersRouter);
 app.use("/api/checkout", checkoutRouter);
+app.use("/api/checkout/mercadopago", pixRouter);
+app.use("/api/webhooks", webhooksRouter);
 
 // Middleware de erro (sempre no final)
 app.use((err, req, res, next) => {

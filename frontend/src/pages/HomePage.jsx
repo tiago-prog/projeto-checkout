@@ -14,6 +14,7 @@ import api from "../services/api";
 export default function HomePage() {
   const [products] = useState(getAllProducts());
   const [buyingId, setBuyingId] = useState(null);
+  const [mpBuyingId, setMpBuyingId] = useState(null);
   const [error, setError] = useState(null);
 
   async function handleBuy(productId) {
@@ -33,7 +34,29 @@ export default function HomePage() {
     } catch (err) {
       setError(err.message);
       setBuyingId(null);
-      console.error("Erro no checkout:", err);
+      console.error("Erro no checkout Stripe:", err);
+    }
+  }
+
+  async function handleMercadoPagoBuy(productId) {
+    setMpBuyingId(productId);
+    setError(null);
+
+    try {
+      // Cria uma preferência de pagamento no Mercado Pago (Checkout Pro)
+      const data = await api.createMercadoPagoCheckout(productId);
+
+      // Redireciona para o checkout hospedado pelo Mercado Pago
+      const url = data.checkoutUrl || data.sandboxUrl;
+      if (url) {
+        window.location.href = url;
+      } else {
+        throw new Error("URL de checkout do Mercado Pago não recebida");
+      }
+    } catch (err) {
+      setError(err.message);
+      setMpBuyingId(null);
+      console.error("Erro no checkout Mercado Pago:", err);
     }
   }
 
@@ -54,7 +77,13 @@ export default function HomePage() {
       )}
 
       <HeroSection />
-      <ProductsGrid products={products} onBuy={handleBuy} buyingId={buyingId} />
+      <ProductsGrid
+        products={products}
+        onBuy={handleBuy}
+        onMercadoPagoBuy={handleMercadoPagoBuy}
+        buyingId={buyingId}
+        mpBuyingId={mpBuyingId}
+      />
 
       <section className="features-section">
         <div className="features-grid">
@@ -66,7 +95,7 @@ export default function HomePage() {
           <div className="feature">
             <span className="feature-icon">🔒</span>
             <h4>Seguro</h4>
-            <p>Pagamento seguro com Stripe</p>
+            <p>Pagamento seguro com Stripe e Mercado Pago</p>
           </div>
           <div className="feature">
             <span className="feature-icon">💯</span>

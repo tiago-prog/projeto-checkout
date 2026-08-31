@@ -7,6 +7,13 @@ import Header from "../components/Header";
 import Footer from "../components/Footer";
 
 export default function SuccessPage() {
+  const params = new URLSearchParams(window.location.search);
+  const orderId = params.get("order_id");
+  // Parâmetros enviados pelo Mercado Pago na back_url de sucesso
+  const paymentId = params.get("payment_id");
+  const status = params.get("status");
+  const paymentType = params.get("payment_type");
+
   return (
     <div className="app-container">
       <Header />
@@ -20,9 +27,27 @@ export default function SuccessPage() {
           </p>
 
           <div className="success-details">
+            {orderId && (
+              <div className="detail-item">
+                <span className="detail-label">Pedido</span>
+                <span className="detail-value">{orderId}</span>
+              </div>
+            )}
+            {paymentId && (
+              <div className="detail-item">
+                <span className="detail-label">Pagamento</span>
+                <span className="detail-value">{paymentId}</span>
+              </div>
+            )}
+            {paymentType && (
+              <div className="detail-item">
+                <span className="detail-label">Método</span>
+                <span className="detail-value">{paymentType}</span>
+              </div>
+            )}
             <div className="detail-item">
               <span className="detail-label">Status</span>
-              <span className="detail-value">✓ Confirmado</span>
+              <span className="detail-value">✓ {status === "approved" ? "Aprovado" : "Confirmado"}</span>
             </div>
             <div className="detail-item">
               <span className="detail-label">Tipo</span>

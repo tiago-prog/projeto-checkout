@@ -16,6 +16,7 @@ export const API_ENDPOINTS = {
     CREATE: `${API_BASE_URL}/api/orders`,
     GET: (id) => `${API_BASE_URL}/api/orders/${id}`,
     CHECKOUT: `${API_BASE_URL}/api/checkout`,
+    CHECKOUT_MERCADOPAGO: `${API_BASE_URL}/api/checkout/mercadopago`,
   },
 };
 

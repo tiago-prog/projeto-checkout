@@ -5,7 +5,7 @@
 
 import ProductCard from "./ProductCard";
 
-export default function ProductsGrid({ products, onBuy, buyingId }) {
+export default function ProductsGrid({ products, onBuy, onMercadoPagoBuy, buyingId, mpBuyingId }) {
   if (!products || products.length === 0) {
     return (
       <section className="products-section">
@@ -27,7 +27,9 @@ export default function ProductsGrid({ products, onBuy, buyingId }) {
             key={product.id}
             product={product}
             onBuy={() => onBuy(product.id)}
+            onMercadoPagoBuy={() => onMercadoPagoBuy(product.id)}
             buying={buyingId === product.id}
+            mercadoPagoBuying={mpBuyingId === product.id}
           />
         ))}
       </div>

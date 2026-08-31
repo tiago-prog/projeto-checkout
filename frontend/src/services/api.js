@@ -66,6 +66,14 @@ class ApiClient {
     });
   }
 
+  // CHECKOUT MERCADO PAGO (Checkout Pro)
+  async createMercadoPagoCheckout(productId) {
+    return this.request(API_ENDPOINTS.ORDERS.CHECKOUT_MERCADOPAGO, {
+      method: "POST",
+      body: JSON.stringify({ productId }),
+    });
+  }
+
   // HEALTH CHECK
   async checkHealth() {
     return this.request(API_ENDPOINTS.HEALTH);

@@ -4,13 +4,14 @@
   "description": "Backend do Projeto 0 - Fundamentos web",
   "main": "src/index.js",
   "scripts": {
-    "dev": "node --watch src/index.js",
+    "dev": "node --watch --watch-path=src src/index.js",
     "start": "node src/index.js"
   },
   "dependencies": {
     "cors": "^2.8.5",
     "dotenv": "^17.4.2",
     "express": "^4.21.0",
+    "mercadopago": "^3.6.0",
     "stripe": "^22.6.0",
     "uuid": "^10.0.0"
   }

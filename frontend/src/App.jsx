@@ -1,6 +1,7 @@
 import HomePage from "./pages/HomePage";
 import SuccessPage from "./pages/SuccessPage";
 import CancelPage from "./pages/CancelPage";
+import PendingPage from "./pages/PendingPage";
 
 /**
  * App Principal
@@ -16,6 +17,10 @@ export default function App() {
 
   if (path === "/cancelado") {
     return <CancelPage />;
+  }
+
+  if (path === "/pendente") {
+    return <PendingPage />;
   }
 
   // Página inicial (padrão)
